@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Iniciativa RPG</title>
+    <link href="styles/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Organizador de Iniciativa RPG</h1>
+
+        <div id="character-forms">
+            <div class="character-form">
+                <input type="text" placeholder="Nome do Personagem" required>
+                <input type="number" placeholder="Bônus de Iniciativa" required>
+            </div>
+        </div>
+
+        <button onclick="addCharacterForm()">Adicionar Personagem</button>
+        <button onclick="rollInitiative()">Rolar Iniciativa</button>
+
+        <div id="results" style="display:none;">
+            <h2>Resultados da Iniciativa</h2>
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Bônus</th>
+                        <th>Rolagem</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="button-group">
+                <button onclick="rollAgain()">Rolar Novamente</button>
+                <button onclick="restart()">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
