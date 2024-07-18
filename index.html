@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organizador de Iniciativa RPG</title>
-    <link href="styles/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
     <div class="container">
         <h1>Organizador de Iniciativa RPG</h1>
-
-        <div id="character-forms">
-            <div class="character-form">
-                <input type="text" placeholder="Nome do Personagem" required>
-                <input type="number" placeholder="Bônus de Iniciativa" required>
-            </div>
-        </div>
-
-        <button onclick="addCharacterForm()">Adicionar Personagem</button>
-        <button onclick="rollInitiative()">Rolar Iniciativa</button>
-
+        <form id="character-form">
+            <input type="text" id="character-name" placeholder="Nome do Personagem">
+            <input type="number" id="initiative-bonus" placeholder="Bônus de Iniciativa">
+            <button type="button" id="increase-bonus">+</button>
+            <button type="button" id="decrease-bonus">-</button>
+            <button type="button" id="add-character">Adicionar Personagem</button>
+            <button type="button" id="add-and-roll" style="display:none;">Adicionar e Rolar</button>
+        </form>
+        <div id="characters-list"></div>
+        <button id="roll-initiative" style="display:none;">Rolar Iniciativa</button>
+        <button id="reset" style="display:none;">Reiniciar</button>
         <div id="results" style="display:none;">
             <h2>Resultados da Iniciativa</h2>
             <table id="results-table">
@@ -35,13 +35,8 @@
                 </thead>
                 <tbody></tbody>
             </table>
-            <div class="button-group">
-                <button onclick="rollAgain()">Rolar Novamente</button>
-                <button onclick="restart()">Reiniciar</button>
-            </div>
         </div>
     </div>
-
     <script src="scripts/script.js"></script>
 </body>
 

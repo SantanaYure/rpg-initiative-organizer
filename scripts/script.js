@@ -1,86 +1,125 @@
-function addCharacterForm() {
-  const formsContainer = document.getElementById('character-forms');
-  const newForm = document.createElement('div');
-  newForm.className = 'character-form';
-  newForm.innerHTML = `
-      <input type="text" placeholder="Nome do Personagem" required>
-      <input type="number" placeholder="Bônus de Iniciativa" required>
-  `;
-  formsContainer.appendChild(newForm);
-}
+let characters = [];
+let rolledCharacters = [];
 
-function rollInitiative() {
-  const characters = [];
-  const forms = document.querySelectorAll('.character-form');
+document.getElementById('add-character').addEventListener('click', function () {
+  const name = document.getElementById('character-name').value;
+  const bonus = parseInt(document.getElementById('initiative-bonus').value);
 
-  forms.forEach(form => {
-    const name = form.querySelector('input[type="text"]').value;
-    const bonus = parseInt(form.querySelector('input[type="number"]').value);
-    const roll = Math.floor(Math.random() * 20) + 1;
-    characters.push({ name, bonus, roll, total: roll + bonus });
-  });
+  if (name && !isNaN(bonus)) {
+    const character = {
+      name,
+      bonus,
+      roll: null,
+      total: null
+    };
+    characters.push(character);
+    updateCharacterList();
+    document.getElementById('character-name').value = '';
+    document.getElementById('initiative-bonus').value = '';
 
-  characters.sort((a, b) => {
-    if (a.roll === 20 && b.roll !== 20) return -1;
-    if (b.roll === 20 && a.roll !== 20) return 1;
-    if (a.roll === 1 && b.roll !== 1) return 1;
-    if (b.roll === 1 && a.roll !== 1) return -1;
-    if (a.total !== b.total) return b.total - a.total;
-    if (a.bonus !== b.bonus) return b.bonus - a.bonus;
-    return a.name.localeCompare(b.name);
-  });
-
-  const resultsTable = document.getElementById('results-table').querySelector('tbody');
-  resultsTable.innerHTML = '';
-  characters.forEach(char => {
-    const row = resultsTable.insertRow();
-    row.insertCell().textContent = char.name;
-    row.insertCell().textContent = char.bonus;
-    row.insertCell().textContent = char.roll;
-    row.insertCell().textContent = char.total;
-  });
-
-  document.getElementById('results').style.display = 'flex';
-}
-
-function rollAgain() {
-  const rows = document.getElementById('results-table').querySelector('tbody').rows;
-  const characters = [];
-
-  for (let i = 0; i < rows.length; i++) {
-    const name = rows[i].cells[0].textContent;
-    const bonus = parseInt(rows[i].cells[1].textContent);
-    const roll = Math.floor(Math.random() * 20) + 1;
-    characters.push({ name, bonus, roll, total: roll + bonus });
+    if (characters.length >= 2) {
+      document.getElementById('roll-initiative').style.display = 'block';
+    }
   }
+});
 
-  characters.sort((a, b) => {
-    if (a.roll === 20 && b.roll !== 20) return -1;
-    if (b.roll === 20 && a.roll !== 20) return 1;
-    if (a.roll === 1 && b.roll !== 1) return 1;
-    if (b.roll === 1 && a.roll !== 1) return -1;
-    if (a.total !== b.total) return b.total - a.total;
-    if (a.bonus !== b.bonus) return b.bonus - a.bonus;
-    return a.name.localeCompare(b.name);
+document.getElementById('roll-initiative').addEventListener('click', function () {
+  rolledCharacters = characters.map(character => {
+    const roll = Math.floor(Math.random() * 20) + 1;
+    const total = roll + character.bonus;
+    return { ...character, roll, total };
   });
 
-  const resultsTable = document.getElementById('results-table').querySelector('tbody');
-  resultsTable.innerHTML = '';
-  characters.forEach(char => {
-    const row = resultsTable.insertRow();
-    row.insertCell().textContent = char.name;
-    row.insertCell().textContent = char.bonus;
-    row.insertCell().textContent = char.roll;
-    row.insertCell().textContent = char.total;
+  sortAndDisplayResults();
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('characters-list').style.display = 'none';
+  document.getElementById('roll-initiative').textContent = 'Rolar Novamente';
+  document.getElementById('reset').style.display = 'block';
+  document.getElementById('add-and-roll').style.display = 'block';
+});
+
+document.getElementById('reset').addEventListener('click', function () {
+  characters = [];
+  rolledCharacters = [];
+  updateCharacterList();
+  updateResultsTable();
+  document.getElementById('roll-initiative').style.display = 'none';
+  document.getElementById('reset').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('roll-initiative').textContent = 'Rolar Iniciativa';
+  document.getElementById('characters-list').style.display = 'block';
+  document.getElementById('add-and-roll').style.display = 'none';
+});
+
+document.getElementById('increase-bonus').addEventListener('click', function () {
+  const bonusInput = document.getElementById('initiative-bonus');
+  bonusInput.value = parseInt(bonusInput.value || 0) + 1;
+});
+
+document.getElementById('decrease-bonus').addEventListener('click', function () {
+  const bonusInput = document.getElementById('initiative-bonus');
+  bonusInput.value = parseInt(bonusInput.value || 0) - 1;
+});
+
+document.getElementById('add-and-roll').addEventListener('click', function () {
+  const name = document.getElementById('character-name').value;
+  const bonus = parseInt(document.getElementById('initiative-bonus').value);
+
+  if (name && !isNaN(bonus)) {
+    const roll = Math.floor(Math.random() * 20) + 1;
+    const total = roll + bonus;
+    const newCharacter = { name, bonus, roll, total };
+    rolledCharacters.push(newCharacter);
+    characters.push(newCharacter); // Adiciona o personagem na lista geral também
+    sortAndDisplayResults();
+
+    document.getElementById('character-name').value = '';
+    document.getElementById('initiative-bonus').value = '';
+  }
+});
+
+function updateCharacterList() {
+  const characterList = document.getElementById('characters-list');
+  characterList.innerHTML = '';
+  characters.forEach(character => {
+    const characterDiv = document.createElement('div');
+    characterDiv.textContent = `${character.name} (Bônus: ${character.bonus})`;
+    characterList.appendChild(characterDiv);
   });
 }
 
-function restart() {
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('character-forms').innerHTML = `
-      <div class="character-form">
-          <input type="text" placeholder="Nome do Personagem" required>
-          <input type="number" placeholder="Bônus de Iniciativa" required>
-      </div>
-  `;
+function updateResultsTable() {
+  const resultsTable = document.getElementById('results-table').getElementsByTagName('tbody')[0];
+  resultsTable.innerHTML = '';
+
+  rolledCharacters.forEach(result => {
+    const row = resultsTable.insertRow();
+    row.insertCell(0).textContent = result.name;
+    row.insertCell(1).textContent = result.bonus;
+    row.insertCell(2).textContent = result.roll;
+    row.insertCell(3).textContent = result.total;
+  });
+}
+
+function sortAndDisplayResults() {
+  rolledCharacters.sort((a, b) => {
+    // Verifica se há 20 natural
+    if (a.roll === 20 && b.roll !== 20) return -1;
+    if (b.roll === 20 && a.roll !== 20) return 1;
+
+    // Verifica se há 1 natural
+    if (a.roll === 1 && b.roll !== 1) return 1;
+    if (b.roll === 1 && a.roll !== 1) return -1;
+
+    // Desempate por total de iniciativa
+    if (b.total !== a.total) return b.total - a.total;
+
+    // Desempate por bônus
+    if (b.bonus !== a.bonus) return b.bonus - a.bonus;
+
+    // Desempate por nome (ordem alfabética)
+    return a.name.localeCompare(b.name);
+  });
+
+  updateResultsTable();
 }

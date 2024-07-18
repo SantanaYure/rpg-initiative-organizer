@@ -1,157 +1,266 @@
-:root {
-  --primary-color: #4a4e69;
-  --secondary-color: #9a8c98;
-  --background-color: #f2e9e4;
-  --text-color: #22223b;
-  --accent-color: #c9ada7;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-h1,
-h2 {
-  color: var(--primary-color);
-  margin-bottom: 20px;
-  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  /* Preto */
+  color: #fff;
+  /* Branco */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
-  background-color: #fff;
-  border-radius: 8px;
+  background: #fff;
+  /* Branco */
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
 }
 
-.form-group {
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000;
+  /* Preto */
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+form input {
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+  flex: 1;
+  border: 1px solid #000;
+  /* Preto */
+  background-color: #fff;
+  /* Branco */
+  color: #000;
+  /* Preto */
 }
 
-input[type="number"],
-input[type="text"] {
+form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #000;
+  /* Preto */
+  color: #ffc107;
+  /* Amarelo */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+form button:hover {
+  background-color: #333;
+  /* Preto escuro */
+}
+
+#increase-bonus,
+#decrease-bonus {
+  background-color: #fff;
+  /* Branco */
+  color: #000;
+  /* Preto */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #000;
+  /* Preto */
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+#increase-bonus:hover,
+#decrease-bonus:hover {
+  background-color: #f0f0f0;
+  /* Cinza claro */
+}
+
+#characters-list {
+  margin-bottom: 20px;
+  border: 1px solid #000;
+  /* Preto */
+  background-color: #fff;
+  /* Branco */
+}
+
+#characters-list div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #000;
+  /* Preto */
+  color: #000;
+  /* Preto */
+}
+
+#characters-list div:last-child {
+  border-bottom: none;
+}
+
+#roll-initiative,
+#reset {
   width: 100%;
   padding: 10px;
-  border: 1px solid var(--secondary-color);
-  border-radius: 4px;
+  margin: 5px 0;
   font-size: 16px;
-}
-
-button {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #000;
+  /* Preto */
+  color: #ffc107;
+  /* Amarelo */
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+#roll-initiative:hover {
+  background-color: #333;
+  /* Preto escuro */
+}
+
+
+
+#reset:hover {
+  background-color: #333;
+  /* Vermelho escuro */
+}
+
+#add-and-roll {
+  padding: 10px 20px;
   font-size: 16px;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
+  background-color: #000;
+  /* Preto */
+  color: #ffc107;
+  /* Amarelo */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
-button:hover {
-  background-color: var(--secondary-color);
-}
-
-.character-form {
-  margin-bottom: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-#results {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.95);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  z-index: 1000;
+#add-and-roll:hover {
+  background-color: #333;
+  /* Preto escuro */
 }
 
 table {
   width: 100%;
-  max-width: 600px;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  color: #000;
+  /* Preto */
 }
 
 th,
 td {
+  padding: 10px;
+  border: 1px solid #dee2e6;
   text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid var(--accent-color);
+  background-color: #fff;
+  /* Branco */
 }
 
 th {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #ffc107;
+  /* Amarelo */
 }
 
-tr:nth-child(even) {
-  background-color: #f8f8f8;
+tbody tr:nth-child(odd) {
+  background: #ffc107;
+  /* Amarelo */
 }
 
-.button-group {
-  display: flex;
-  gap: 10px;
+tbody tr:nth-child(even) {
+  background: #fff;
+  /* Branco */
 }
 
-@media screen and (max-width: 480px) {
-  .character-form {
+/* Breakpoints */
+@media (max-width: 1920px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  form {
     flex-direction: column;
   }
-}
 
-@media screen and (min-width: 481px) and (max-width: 660px) {
-  body {
-    padding: 15px;
+  form input {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  #increase-bonus,
+  #decrease-bonus,
+  #add-character,
+  #add-and-roll,
+  #roll-initiative,
+  #reset {
+    width: 100%;
+    margin: 5px 0;
   }
 }
 
-@media screen and (min-width: 661px) and (max-width: 1024px) {
-  body {
-    padding: 30px;
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  form button {
+    font-size: 14px;
+  }
+
+  #roll-initiative,
+  #reset {
+    font-size: 14px;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+    padding: 5px;
   }
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1366px) {
-  body {
-    padding: 40px;
-  }
-}
+@media (max-width: 320px) {
 
-@media screen and (min-width: 1367px) and (max-width: 1444px) {
-  body {
-    padding: 50px;
+  form input,
+  form button,
+  #roll-initiative,
+  #reset {
+    padding: 5px;
+    font-size: 12px;
   }
-}
 
-@media screen and (min-width: 1445px) {
-  body {
-    padding: 60px;
+  form {
+    padding: 5px;
+  }
+
+  .container {
+    padding: 5px;
   }
 }
